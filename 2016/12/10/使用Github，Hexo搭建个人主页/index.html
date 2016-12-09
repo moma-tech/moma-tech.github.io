@@ -1,0 +1,865 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Github, blog, hexo, next," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="因为心水hexo漂亮简单的主题next，所以用github搭了一套。
+
+主要基于：
+
+Github
+Hexo Blog Framework
+NexT 主题
+
+以下的安装配置基于本人的Fedora，其他系统的大同小异
+0x01 环境准备01.本地Node.js安装Hexo系统使用node.js开发，因此需要本地预先安装node.js.Fedora直接使用 dnf 安装即可，没有的请检查下自己的源.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Github，Hexo搭建个人主页">
+<meta property="og:url" content="https://moma-tech.github.io/2016/12/10/使用Github，Hexo搭建个人主页/index.html">
+<meta property="og:site_name" content="Moma-Tech">
+<meta property="og:description" content="因为心水hexo漂亮简单的主题next，所以用github搭了一套。
+
+主要基于：
+
+Github
+Hexo Blog Framework
+NexT 主题
+
+以下的安装配置基于本人的Fedora，其他系统的大同小异
+0x01 环境准备01.本地Node.js安装Hexo系统使用node.js开发，因此需要本地预先安装node.js.Fedora直接使用 dnf 安装即可，没有的请检查下自己的源.1">
+<meta property="og:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/moma-tech.png-wm">
+<meta property="og:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/github-pages.png-wm">
+<meta property="og:updated_time" content="2016-12-09T18:24:15.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Github，Hexo搭建个人主页">
+<meta name="twitter:description" content="因为心水hexo漂亮简单的主题next，所以用github搭了一套。
+
+主要基于：
+
+Github
+Hexo Blog Framework
+NexT 主题
+
+以下的安装配置基于本人的Fedora，其他系统的大同小异
+0x01 环境准备01.本地Node.js安装Hexo系统使用node.js开发，因此需要本地预先安装node.js.Fedora直接使用 dnf 安装即可，没有的请检查下自己的源.1">
+<meta name="twitter:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/moma-tech.png-wm">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6361626845636462000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://moma-tech.github.io/2016/12/10/使用Github，Hexo搭建个人主页/"/>
+
+
+
+
+
+  <title> 使用Github，Hexo搭建个人主页 | Moma-Tech </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Moma-Tech</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://moma-tech.github.io/2016/12/10/使用Github，Hexo搭建个人主页/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Ivan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Moma-Tech">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Moma-Tech" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Github，Hexo搭建个人主页
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-10T06:25:16+08:00">
+                2016-12-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2016-12-10T02:24:15+08:00">
+                2016-12-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/互联网服务工具/" itemprop="url" rel="index">
+                    <span itemprop="name">互联网服务工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/10/使用Github，Hexo搭建个人主页/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/使用Github，Hexo搭建个人主页/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为心水hexo漂亮简单的主题next，所以用github搭了一套。</p>
+<p><img src="http://7xr4lt.com1.z0.glb.clouddn.com/moma-tech.png-wm" alt="MOMA-TEch"></p>
+<p>主要基于：</p>
+<ul>
+<li><a href="https://github.com" target="_blank" rel="external">Github</a></li>
+<li><a href="https://hexo.io" target="_blank" rel="external">Hexo Blog Framework</a></li>
+<li><a href="http://theme-next.iissnan.com" target="_blank" rel="external">NexT 主题</a></li>
+</ul>
+<p>以下的安装配置基于本人的Fedora，其他系统的大同小异</p>
+<h2 id="0x01-环境准备"><a href="#0x01-环境准备" class="headerlink" title="0x01 环境准备"></a>0x01 环境准备</h2><h3 id="01-本地Node-js安装"><a href="#01-本地Node-js安装" class="headerlink" title="01.本地Node.js安装"></a>01.本地Node.js安装</h3><p>Hexo系统使用node.js开发，因此需要本地预先安装node.js.<br>Fedora直接使用 dnf 安装即可，没有的请检查下自己的源.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan ~]$ dnf install nodejs</div><div class="line">[root@ivan ~]$ npm</div></pre></td></tr></table></figure></p>
+<p>安装成功的，可以顺利执行npm命令.<br>失败的，可能没洗手，去洗手，然后重新来一次.</p>
+<blockquote>
+<p>想追新的，可以去编译 <a href="https://github.com.nodejs/node" target="_blank" rel="external">源码</a>，但对于本次内容，然并卵  </p>
+</blockquote>
+<h3 id="02-本地GIT安装"><a href="#02-本地GIT安装" class="headerlink" title="02.本地GIT安装"></a>02.本地GIT安装</h3><p>因为使用Github作为页面空间，所以需要安装Git.<br>Fedora默认已经安装了，没有的dnf一下，注意下包名（git-core） ，同样有问题的，洗手，检查自己的源.</p>
+<blockquote>
+<p>没用过git的没有关系，本次内容用不到git命令，想了解的，可以各种搜索.<br>此处有推荐 : <a href="http://iissnan.com/progit" target="_blank" rel="external">《Pro Git简体中文》</a>,译者就是NexT主题的作者.</p>
+</blockquote>
+<h2 id="0x02-Hexo网站搭建"><a href="#0x02-Hexo网站搭建" class="headerlink" title="0x02 Hexo网站搭建"></a>0x02 Hexo网站搭建</h2><blockquote>
+<p>先上官方英文教程 <a href="https://hexo.io/docs/" target="_blank" rel="external">hexo Docs</a></p>
+</blockquote>
+<h3 id="01-安装Hexo-Cli"><a href="#01-安装Hexo-Cli" class="headerlink" title="01.安装Hexo Cli"></a>01.安装Hexo Cli</h3><p>使用npm 安装 hexo cli.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan ~]$ npm install -g hexo-cli</div><div class="line">[root@ivan ~]$ hexo version</div></pre></td></tr></table></figure></p>
+<p>安装成功的，会成功输出hexo-cli版本在内的相关信息，有问题的，你知道怎么做的.</p>
+<h3 id="02-网站初始化"><a href="#02-网站初始化" class="headerlink" title="02.网站初始化"></a>02.网站初始化</h3><p>hexo安装成功后，就可以进行网站的搭建了.<br>首先选择合适的目录，然后执行初始化命令.<br>本人此处选择的目录是 <strong>projects/hexo-site</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan ~]$ <span class="built_in">cd</span> projects</div><div class="line">[ivan@ivan projects]$ hexo init hexo-site</div><div class="line">[ivan@ivan projects]$ <span class="built_in">cd</span> hexo-site</div><div class="line">[ivan@ivan hexo-site]$ npm install</div></pre></td></tr></table></figure></p>
+<p>安装成功后，基础目录就自动创建完成了.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">|--- _config.yml      // 站点配置文件</div><div class="line">|--- package.json     // Hexo站点信息及相关依赖</div><div class="line">|--- scaffolds        // 基础post的脚手架，里面应该有 draft，post，page几种的md</div><div class="line">|--- source           // 站点实际内容</div><div class="line">|    |--- _drafts     // 草稿文章，不会在站内显示</div><div class="line">|    |--- _post       // 内容文章，站内显示</div><div class="line">|--- themes           // 主题文件夹</div><div class="line">|    |--- landscape   // 默认的自带主题</div></pre></td></tr></table></figure></p>
+<h3 id="03-本地测试"><a href="#03-本地测试" class="headerlink" title="03.本地测试"></a>03.本地测试</h3><p>网站文件夹建立完成后，可以通过hexo cli命令，启动本地服务，进行查看.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan hexo-site]$ hexo clean</div><div class="line">[ivan@ivan hexo-site]$ hexo server</div></pre></td></tr></table></figure></p>
+<p>启动后，<strong>浏览器 localhost:4000</strong> 可以顺利看到站点.  </p>
+<blockquote>
+<p>此处clean命令用于清除缓存，建议后续有配置文件的修改后，都clean一下.  </p>
+</blockquote>
+<h2 id="0x03-NexT主题安装"><a href="#0x03-NexT主题安装" class="headerlink" title="0x03 NexT主题安装"></a>0x03 NexT主题安装</h2><h3 id="01-NexT下载安装"><a href="#01-NexT下载安装" class="headerlink" title="01.NexT下载安装"></a>01.NexT下载安装</h3><blockquote>
+<p>先上官方中文教程 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT 开始使用</a></p>
+</blockquote>
+<p>NexT的安装，实际就是把NexT相关文件放到Hexo站点的theme目录下面，官方推荐的方法是 git clone.<br>当然下载，解压，也是同样可以的.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan hexo-site]$ git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure></p>
+<h3 id="02-NexT主题启用"><a href="#02-NexT主题启用" class="headerlink" title="02.NexT主题启用"></a>02.NexT主题启用</h3><p>主题安装完成后，需要在站点配置文件(<strong>_config.yml</strong>)启用.  </p>
+<blockquote>
+<p>_config.yml很重要，详细说明请参考 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="external">Hexo Configuration</a><br>具体步骤：</p>
+<ol>
+<li>使用任意editor打开 hexo-site_config.yml，此处有推荐 <strong>EMACS</strong>.</li>
+<li>先修改开始几行的 <strong>language: zh-Hans</strong>，这样主题会使用简体中文.</li>
+<li>CTL-F 查找 theme 关键字，应该是在Extensions部分，直接滚也行，没几行.</li>
+<li>修改 theme： next</li>
+<li>保存，退出.<br>站点配置文件的前几行，是网站的一些基本信息，添加一下，简单英文，看不懂的请洗手查字典.<br>部分参考：<blockquote>
+<p>language: zh-Hans<br>timezone: UTC  </p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="0x04-创建文章"><a href="#0x04-创建文章" class="headerlink" title="0x04 创建文章"></a>0x04 创建文章</h2><h3 id="01-创建POST"><a href="#01-创建POST" class="headerlink" title="01.创建POST"></a>01.创建POST</h3><p>执行<strong>hexo new</strong>命令，可以在source/_post目录下自动创建文章<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan hexo-site]$ hexo new <span class="string">"中文测试"</span>  </div><div class="line">.source</div><div class="line">|---_post</div><div class="line">|   |--- 中文测试.md</div></pre></td></tr></table></figure></p>
+<h3 id="02-编辑内容"><a href="#02-编辑内容" class="headerlink" title="02.编辑内容"></a>02.编辑内容</h3><p>Post使用makedown格式，由两部分组成.<br>头部为yaml/json格式的属性，用三条短横线/三个分号与后续正文分隔.<br><strong>YAML</strong><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">title:</span> 中文测试</div><div class="line"><span class="attr">date:</span> <span class="number">2016</span><span class="bullet">-12</span><span class="bullet">-09</span> <span class="number">20</span>:<span class="number">09</span>:<span class="number">10</span></div><div class="line"><span class="attr">tags:</span> </div><div class="line"><span class="meta">---</span></div></pre></td></tr></table></figure></p>
+<p><strong>JSON</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">"title": "中文测试"，</div><div class="line">"date": "2016-12-09 20:09:10",</div><div class="line">"tags": ""</div><div class="line">;;;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>头部支持的属性，请参考 <a href="https://hexo.io/docs/front-matter.html" target="_blank" rel="external">Hexo Front Matter</a></p>
+</blockquote>
+<p>正文部分，使用Markdown格式，基础的md标准语法都能支持，不太会的，直接写html也可以的.<br>没用过md的，请自行洗手百度.</p>
+<h2 id="0x05-Hexo网站发布"><a href="#0x05-Hexo网站发布" class="headerlink" title="0x05 Hexo网站发布"></a>0x05 Hexo网站发布</h2><h3 id="01-Github-Repo创建"><a href="#01-Github-Repo创建" class="headerlink" title="01.Github Repo创建"></a>01.Github Repo创建</h3><blockquote>
+<p>先上官方英文教程 <a href="https://pages.github.io" target="_blank" rel="external">Github Page</a>  <em>首页往下拉</em></p>
+</blockquote>
+<ol>
+<li><strong>首先你要有个github账号</strong>  </li>
+<li>点击 New Repository    </li>
+<li>repo的名字为 (你的username).github.io<br><img src="http://7xr4lt.com1.z0.glb.clouddn.com/github-pages.png-wm" alt="参考示例图">  <blockquote>
+<p>参考图：此处我的username为moma-tech，repo名为moma-tech.github.io<br>PS: username的修改在 <strong> setting – Account – Change username</strong></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="02-网站配置"><a href="#02-网站配置" class="headerlink" title="02.网站配置"></a>02.网站配置</h3><p>此处主要修改站点配置文件，增加github的发布信息.<br>步骤如下：</p>
+<ol>
+<li>使用任意editor打开 hexo-site_config.yml，此处有推荐 <strong>EMACS</strong>.</li>
+<li>首先修改<strong>URL</strong>部分的 <strong>url: <a href="https://moma-tech.github.io">https://moma-tech.github.io</a></strong></li>
+<li>查找<strong>Deployment</strong>部分</li>
+<li><p>deploy修改如下  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/moma-tech/moma-tech.github.io</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+<li><p>保存，退出.</p>
+</li>
+</ol>
+<h3 id="03-网站发布"><a href="#03-网站发布" class="headerlink" title="03.网站发布"></a>03.网站发布</h3><ol>
+<li><p>首先安装 hexo 的 git deply 插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan hexo-site]$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行 clean， generate 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan hexo-site]$ hexo clean  </div><div class="line">[ivan@ivan hexo-site]$ hexo g</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行 deploy 命令</p>
+<pre><code class="bash">[ivan@ivan hexo-site]$ hexo deploy
+</code></pre>
+<blockquote>
+<p>过程中需要输入 github的用户名及密码，不想每次都输入的，可以配置github的SSH，具体请洗手百度.  </p>
+</blockquote>
+</li>
+<li><p>提示发布完成后，浏览器输入 (你的username).github.io 查看</p>
+</li>
+</ol>
+<h2 id="0x06-下期预告"><a href="#0x06-下期预告" class="headerlink" title="0x06 下期预告"></a>0x06 下期预告</h2><ul>
+<li>主题配置</li>
+<li>分类，标签配置</li>
+<li>个性化头像，关于，社交信息配置</li>
+<li>评论，分享功能配置</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Github-blog-hexo-next/" rel="tag"># Github, blog, hexo, next</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/09/中文测试/" rel="next" title="中文测试">
+                <i class="fa fa-chevron-left"></i> 中文测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/10/使用Github，Hexo搭建个人主页/"
+     data-title="使用Github，Hexo搭建个人主页"
+     data-content=""
+     data-url="https://moma-tech.github.io/2016/12/10/使用Github，Hexo搭建个人主页/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/10/使用Github，Hexo搭建个人主页/"
+           data-title="使用Github，Hexo搭建个人主页" data-url="https://moma-tech.github.io/2016/12/10/使用Github，Hexo搭建个人主页/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100"
+               alt="Ivan" />
+          <p class="site-author-name" itemprop="name">Ivan</p>
+          <p class="site-description motion-element" itemprop="description">生如夏花之绚烂，死如秋叶之静美</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/moma-tech" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-环境准备"><span class="nav-number">1.</span> <span class="nav-text">0x01 环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-本地Node-js安装"><span class="nav-number">1.1.</span> <span class="nav-text">01.本地Node.js安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-本地GIT安装"><span class="nav-number">1.2.</span> <span class="nav-text">02.本地GIT安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Hexo网站搭建"><span class="nav-number">2.</span> <span class="nav-text">0x02 Hexo网站搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-安装Hexo-Cli"><span class="nav-number">2.1.</span> <span class="nav-text">01.安装Hexo Cli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-网站初始化"><span class="nav-number">2.2.</span> <span class="nav-text">02.网站初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-本地测试"><span class="nav-number">2.3.</span> <span class="nav-text">03.本地测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-NexT主题安装"><span class="nav-number">3.</span> <span class="nav-text">0x03 NexT主题安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-NexT下载安装"><span class="nav-number">3.1.</span> <span class="nav-text">01.NexT下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-NexT主题启用"><span class="nav-number">3.2.</span> <span class="nav-text">02.NexT主题启用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-创建文章"><span class="nav-number">4.</span> <span class="nav-text">0x04 创建文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-创建POST"><span class="nav-number">4.1.</span> <span class="nav-text">01.创建POST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-编辑内容"><span class="nav-number">4.2.</span> <span class="nav-text">02.编辑内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-Hexo网站发布"><span class="nav-number">5.</span> <span class="nav-text">0x05 Hexo网站发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-Github-Repo创建"><span class="nav-number">5.1.</span> <span class="nav-text">01.Github Repo创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-网站配置"><span class="nav-number">5.2.</span> <span class="nav-text">02.网站配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-网站发布"><span class="nav-number">5.3.</span> <span class="nav-text">03.网站发布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-下期预告"><span class="nav-number">6.</span> <span class="nav-text">0x06 下期预告</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ivan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"moma-tech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
