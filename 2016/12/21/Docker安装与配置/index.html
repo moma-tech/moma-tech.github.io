@@ -1,0 +1,834 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Docker,Container," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0x00 容器化技术01.市场需求之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。
+除了微服务外，这几年另外一个很火的技术，就是容器化，或者就是Docker。他的出现是基于云平台技术的普及，云平台技术之前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker安装与配置">
+<meta property="og:url" content="https://moma-tech.github.io/2016/12/21/Docker安装与配置/index.html">
+<meta property="og:site_name" content="Moma-Tech">
+<meta property="og:description" content="0x00 容器化技术01.市场需求之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。
+除了微服务外，这几年另外一个很火的技术，就是容器化，或者就是Docker。他的出现是基于云平台技术的普及，云平台技术之前">
+<meta property="og:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/ali-dcoker-mirrror.png-wm">
+<meta property="og:updated_time" content="2016-12-21T10:26:16.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker安装与配置">
+<meta name="twitter:description" content="0x00 容器化技术01.市场需求之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。
+除了微服务外，这几年另外一个很火的技术，就是容器化，或者就是Docker。他的出现是基于云平台技术的普及，云平台技术之前">
+<meta name="twitter:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/ali-dcoker-mirrror.png-wm">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6361626845636462000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://moma-tech.github.io/2016/12/21/Docker安装与配置/"/>
+
+
+
+
+
+  <title> Docker安装与配置 | Moma-Tech </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Moma-Tech</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://moma-tech.github.io/2016/12/21/Docker安装与配置/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Ivan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Moma-Tech">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Moma-Tech" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Docker安装与配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-21T21:21:44+08:00">
+                2016-12-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2016-12-21T18:26:16+08:00">
+                2016-12-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/容器化技术/" itemprop="url" rel="index">
+                    <span itemprop="name">容器化技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/21/Docker安装与配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/21/Docker安装与配置/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-容器化技术"><a href="#0x00-容器化技术" class="headerlink" title="0x00 容器化技术"></a>0x00 容器化技术</h2><h3 id="01-市场需求"><a href="#01-市场需求" class="headerlink" title="01.市场需求"></a>01.市场需求</h3><p>之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。<br>设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。</p>
+<p>除了微服务外，这几年另外一个很火的技术，就是容器化，或者就是Docker。他的出现是基于云平台技术的普及，云平台技术之前的核心实现就是虚拟化，通过虚拟化来跨越物理资源的界限，实现资源共享。  </p>
+<p>虚拟化技术发展了很多年，整个体系越来越庞大，所带来的就是成本的增加和效率的降低，同时虚拟化针对了广泛市场需求，最大的是企业级IT治理，所以不单单是资源分配，还要涉及整体规划，安全，周边配套等多方面因素，造成了应用场景的复杂度陡升，带来的就是技术的门槛很高，最明显的就是懂虚拟化的人才真心不多，而且大部分都集中在那几个工具使用上，同时还有高成本，因此在火热的创业公司市场，更多的是目标的快速实现，规划/安全都不是前期重点，导致部署和管理一套虚拟化远比租一堆阿里云贵的多。  </p>
+<p>这时候Docker出现了，轻量级容器技术，Linux底层，更简单直接，成本更低，效率更高，同时本身将虚拟化所需要的大量配置管理剔除出去（实际是独立了出去，如K8S），上手也就更容易。直接受影响的就是开发/部署/运维环节，免费开源，大量的可用镜像，更好的资源利用，大部分秒级的关闭重启，分分钟实现高弹性不是梦。再加上低成本，大量云平台提供商大力推广，备受推崇，紧接着微服务的出现，两者的相似和互补，对创业型公司，或者小公司相当友好，一下子抢占了大量市场。  </p>
+<p>Docker公司（之前叫dotCloud）的成功实际也反映了当前软件开发市场一些特点，本身是一家Paas公司，在大公司之间求生存，临死之际，将docker核心技术开源了，明确的应用场景，简单粗暴，还不要钱，各路程序员立马来了兴趣，懒人改变世界，只要几行命令，就能解决之前各种脚本的重复编写，也让容器化技术立马成为了开发部署的首选。  </p>
+<h3 id="02-技术角度"><a href="#02-技术角度" class="headerlink" title="02.技术角度"></a>02.技术角度</h3><p>Docker本身采用的C/S框架。<br>S端自然就是Docker的核心引擎，主要就是一个Docker Daemon，用来处理所有Container的建立，运行等等。<br>C端就是用来与S端进行交互的，主要就是一套CLI命令，通过Socket/API形式，让用户与Daemon之间进行通信，常见的docker run，docker pull…<br>Docker体系的构成除了操作命令外，主要有三个主体部件。  </p>
+<ol>
+<li>Images 镜像<br>Images 是最基本的可用部件，他是由一系列的Layer构成的。<br>Docker通过使用Linux底层的文件联合技术（UnionFS），将这些Layers组合到Images里面。<br>镜像本身的构成更像一个最基本的Stack结构，你需要为一个镜像增加新的功能，只需要push一个新layer就可以了，还不需要从0重新开始建立。<br>这个微服务架构的出发点是一致的，由多个独立的服务构成一个整体的服务，两者结构不同，Docker更多像个Stack，本身是一个从下往上堆叠的过程，微服务更像一个Network结构，每个服务之间更平等。<br>举例：我们本身已经有一个基本的Fedora的系统镜像，我需要在上面增加一个Fzug的repo。<br>常规我们在系统中执行：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget htp://repo.fdzh.org/FZUG/FZUG.repo -P /etc/yum.repo.d/</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在Docker中就是将上述命令增加到镜像描述文件（dockerfile）中。<br>在Dockerfile中增加命令行的操作，实际就是为镜像增加了一层layer。</p>
+<ol>
+<li><p>Container 容器<br>有了Image之后，我们要使用他的话，就是要建立一个Container来运行他，想象一下早期的虚拟光驱，ISO和光驱的关系，一个道理。<br>Container的价值就在于独立性上，容器都是基于镜像创建的，镜像本身更像一份声明，相同的镜像永远都是一致的，容器则是运行时的镜像，基于相同镜像创建的容器是相互独立的。<br>用户更多使用的对象就是容器，控制一个容器的创建，运行，停止，移动，删除，实际就能实现服务（镜像）的高可用，弹性部署等等一系列需求，所以Docker本身叫做容器化技术。<br>容器化的技术使用还有一个更关键的问题，就是容器的管理，简单的可以使用命令行管理，但如果容器数量过多，或者有容错，均衡等需求时，容器的自动化管理是很重要的，这带来的就是Google的K8s等容器管理平台，Docker公司自己本身有Swarm，也是容器管理工具，新版的docker已经整合了swarm，并号称5x faster than k8s，这种举动，有点像Windows自带IE的行为，最近也导致了一场技术战争，最终可能会导致新的容器技术的出现，拭目以待。</p>
+</li>
+<li><p>Registeries Center 仓库<br>Docker是开源的，最大的优势就体现在仓库上。<br>仓库是用来存放镜像的，就像github一样，各路程序员可以将自己创建的镜像，注册发布到docker仓库上，供大家使用和改进。<br>仓库也分公有和私有，公有的Docker仓库就是Docker Hub。里面有大量的镜像，基本可以满足各路需求。  </p>
+</li>
+</ol>
+<h2 id="0x01-Docker实践"><a href="#0x01-Docker实践" class="headerlink" title="0x01 Docker实践"></a>0x01 Docker实践</h2><p>基于：</p>
+<ul>
+<li><a href="https://www.docker.com" target="_blank" rel="external">Docker官网</a>  </li>
+</ul>
+<p>以下的安装配置基于本人的Fedora，其他系统的大同小异。</p>
+<h3 id="01-安装"><a href="#01-安装" class="headerlink" title="01.安装"></a>01.安装</h3><blockquote>
+<p>先上官方英文教程 <a href="https://docs.docker.com/engine/installation/linux/fedora/" target="_blank" rel="external">Docker Install on Fedora</a>  </p>
+</blockquote>
+<p>我们需要安装的主要就是Docker Engine.</p>
+<ol>
+<li><p>确认系统是64位的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ uname -r</div><div class="line">4.8.14-300.fc25.x86_64</div></pre></td></tr></table></figure>
+</li>
+<li><p>增加docker repo  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ emacs /etc/yum.repo.d/docker-main.repo</div><div class="line">[docker-main-repo]</div><div class="line">name=Docker main Repository</div><div class="line">baseurl=https://yum.dockerproject.org/repo/main/fedora/$releasever/</div><div class="line">enabled=1</div><div class="line">gpgcheck=1</div><div class="line">gpgkey=https://yum.dockerproject.org/gpg</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>目前Fedora最高支持到24，使用25的，请把$releasever手动定义为24</p>
+<ol>
+<li><p>dnf安装  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ dnf install docker-engine</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ systemctl enable docker.service</div><div class="line">[root@ivan]$ service docker start</div></pre></td></tr></table></figure>
+</li>
+<li><p>测试安装  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ docker info</div><div class="line">Container: 0  </div><div class="line"> Running: 0</div><div class="line"> Paused: 0</div><div class="line"> Stopped: 0</div><div class="line"> .......</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="02-一些配置"><a href="#02-一些配置" class="headerlink" title="02. 一些配置"></a>02. 一些配置</h3><h4 id="存储路径配置"><a href="#存储路径配置" class="headerlink" title="存储路径配置"></a>存储路径配置</h4><p>镜像本身由dockerfile描述，然后通过docker build命令构建，构建后的镜像往往是很大的，同时基于镜像创建container也有一定的存储空间要求，例如你创建了一个mysql的容器，往往需要同时创建一个物理卷，否则，一旦容器关闭，容器内的数据也就同时销毁了。  </p>
+<p>docker默认的存储位置是在 /var/lib/docker，里面包含了containers，image，volumes等一系列文件夹，看名字就知道是存啥的了，因此基于磁盘空间的管理需求，需要修改默认的存储路径。 </p>
+<p>网上很多种方法，大部分都是基于sync或者link的形式，将var/lib/docker映射到其他磁盘。其实官方提供了更简单的方法，启动守护进程的时候，使用-g参数，修改docker runtime的root path。参考<a href="https://docs.docker.com/engine/reference/commandline/dockerd/" target="_blank" rel="external">dockerd Ref.</a>  </p>
+<p>fedora使用的systemd，这里需要修改的是docker.service文件。<br>打开文件，查找到ExecStart=/usr/bin/dockerd，增加参数，指定存储位置为 /home/docker<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">ExecStart=/usr/bin/dockerd -g=/home/docker</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>更新守护进程，重启服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ systemctl daemon-reload</div><div class="line">[root@ivan]$ servie docker restart</div></pre></td></tr></table></figure></p>
+<p>可以通过查看docker info，看到 Docker Root Dir已经变更为新的地址。<br>更复杂的存储相关内容可以参考：<a href="https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/" target="_blank" rel="external">Docker Storage章节</a>  </p>
+<h4 id="仓库镜像配置"><a href="#仓库镜像配置" class="headerlink" title="仓库镜像配置"></a>仓库镜像配置</h4><p>公有仓库中有大量的可直接使用的镜像，但是介于国内网络环境，pull起来的网速有时候相当感人。最简单的解决方式，就是使用国内有国际访问能力的公司提供的镜像服务，网上一搜一大把，比如Daoloud，阿里等等。<br>这里配置用阿里举例。吐槽下，阿里云现在产品线越来越大，然后都集中在一个控制页面，每次上去眼花缭乱，这里使用的开发平台还是beta版，管理页面还找不到。  </p>
+<ol>
+<li>申请个阿里云账号</li>
+<li>访问阿里云开发者平台： <a href="https://dev.aliyun.com" target="_blank" rel="external">开发者平台</a></li>
+<li>进入管理中心，点击加速器，里面有专属加速器地址，以及各平台的配置方法。<br><img src="http://7xr4lt.com1.z0.glb.clouddn.com/ali-dcoker-mirrror.png-wm" alt="示例图"></li>
+<li><p>修改docker.service文件.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">ExecStart=/usr/bin/dockerd -g=/home/docker --registry-mirror=https://xxxxxxx.mirror.aliyuncs.com</div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>更新守护进程，重启服务</p>
+</li>
+</ol>
+<h4 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h4><p>路径和镜像的配置是最基本的，也是初步接触docker比较有用的配置。  </p>
+<p>另外还有一些配置，可以参考docker官方文档，包括docker本身的一些配置，上面用的守护进程的一些参数等等。<br>守护进程作为最主要的管理者，大部分配置都是集中在他的使用参数上，除了上述修改service，增加参数的方式，也可以通过直接运行dockerd的形式，来满足不同的参数需求，比如说需要debug的时候。  </p>
+<p>此外安全方便，配置SSH对容器进行访问是最常见的，同时守护进程是支持远程访问的，所以守护进程的保护也是需要的。 </p>
+<p>除了守护进程外，另一个存在配置的就是镜像和容器，集中在dockerfile的编写，以及build/run等命令的参数上。这块内容比较灵活，可以根据实际需要查阅相关的内容。这一块的配置可以使用配置管理工具来实现分发的需求，Ansible，Chef，Puppet等均支持docker，本人非专业人士，只是简单的使用了supervisor用来对镜像运行时的一些进程进行了配置管理，这块一搜一大把，略过。  </p>
+<h3 id="03-简单的运行"><a href="#03-简单的运行" class="headerlink" title="03. 简单的运行"></a>03. 简单的运行</h3><p>配置完成后，就可以实际的找一些镜像，运行个容器了。<br><strong><em>官方hello-world</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[ivan@ivan]$ docker run --rm hello-world</div><div class="line">Unable to find image &apos;hello-world:latest&apos; locally</div><div class="line">latest: Pulling from library/hello-world</div><div class="line">c04b14da8d14: Pull complete </div><div class="line">Digest: sha256:0256e8a36e2070f7bf2d0b0763dbabdd67798512411de4cdcf9431a1feb60fd9</div><div class="line">Status: Downloaded newer image for hello-world:latest</div><div class="line"></div><div class="line">Hello from Docker!</div><div class="line">This message shows that your installation appears to be working correctly.</div><div class="line"></div><div class="line">To generate this message, Docker took the following steps:</div><div class="line"> 1. The Docker client contacted the Docker daemon.</div><div class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</div><div class="line"> 3. The Docker daemon created a new container from that image which runs the</div><div class="line">    executable that produces the output you are currently reading.</div><div class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</div><div class="line">    to your terminal.</div><div class="line"></div><div class="line">To try something more ambitious, you can run an Ubuntu container with:</div><div class="line"> $ docker run -it ubuntu bash</div><div class="line"></div><div class="line">Share images, automate workflows, and more with a free Docker Hub account:</div><div class="line"> https://hub.docker.com</div><div class="line"></div><div class="line">For more examples and ideas, visit:</div><div class="line"> https://docs.docker.com/engine/userguide/</div></pre></td></tr></table></figure></p>
+<ol>
+<li>使用docker run命令</li>
+<li>-rm 表示如果同名容器存在的话自动删除</li>
+<li>hello-world 用于创建容器的镜像名称，后面可以加版本号，不加的话，会默认最新的，一般都是latest</li>
+<li>过程：<blockquote>
+<p>本地找不到镜像<br>从仓库中pull latest版本到本地，包括签名和状态<br>创建容器，执行命令，输出内容～～</p>
+</blockquote>
+</li>
+<li>后面有一个进阶的命令，下载一个ubuntu镜像，并打开bash  </li>
+</ol>
+<p><strong><em>基础命令</em></strong><br>docker client端可用命令很多，本着第一篇的原则，罗列些比较基本的，便于了解docker的相关概念。  </p>
+<ol>
+<li>docker images //列出本地的镜像</li>
+<li>docker run 运行参数 镜像：版本 镜像运行参数 // 创建一个container并运行，可用参数很多，后续可以单开一篇</li>
+<li>docker exec 运行参数 容器名称 容器参数 // 与运行中的容器之间进行命令行交互</li>
+<li>docker rm 容器名称 // 删除一个容器</li>
+<li>docker attach 运行参数 容器名称 // 更高阶的交互手段</li>
+<li>……</li>
+</ol>
+<h2 id="0x03-后续计划"><a href="#0x03-后续计划" class="headerlink" title="0x03 后续计划"></a>0x03 后续计划</h2><ul>
+<li>docker命令列表，食用指南</li>
+<li>传统java项目容器化部署实战</li>
+<li>Swarm介绍及配置</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Container/" rel="tag"># Container</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/21/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/21/Docker安装与配置/"
+     data-title="Docker安装与配置"
+     data-content=""
+     data-url="https://moma-tech.github.io/2016/12/21/Docker安装与配置/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/21/Docker安装与配置/"
+           data-title="Docker安装与配置" data-url="https://moma-tech.github.io/2016/12/21/Docker安装与配置/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100"
+               alt="Ivan" />
+          <p class="site-author-name" itemprop="name">Ivan</p>
+          <p class="site-description motion-element" itemprop="description">生如夏花之绚烂，死如秋叶之静美</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/moma-tech" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-容器化技术"><span class="nav-number">1.</span> <span class="nav-text">0x00 容器化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-市场需求"><span class="nav-number">1.1.</span> <span class="nav-text">01.市场需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-技术角度"><span class="nav-number">1.2.</span> <span class="nav-text">02.技术角度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Docker实践"><span class="nav-number">2.</span> <span class="nav-text">0x01 Docker实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-安装"><span class="nav-number">2.1.</span> <span class="nav-text">01.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-一些配置"><span class="nav-number">2.2.</span> <span class="nav-text">02. 一些配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储路径配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">存储路径配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仓库镜像配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">仓库镜像配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他配置"><span class="nav-number">2.2.3.</span> <span class="nav-text">其他配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-简单的运行"><span class="nav-number">2.3.</span> <span class="nav-text">03. 简单的运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-后续计划"><span class="nav-number">3.</span> <span class="nav-text">0x03 后续计划</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ivan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"moma-tech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
