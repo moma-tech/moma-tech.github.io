@@ -93,7 +93,7 @@
 <meta property="og:description" content="0x00 容器化技术01.市场需求之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。
 除了微服务外，这几年另外一个很火的技术，就是容器化，或者就是Docker。他的出现是基于云平台技术的普及，云平台技术之前">
 <meta property="og:image" content="http://7xr4lt.com1.z0.glb.clouddn.com/ali-dcoker-mirrror.png-wm">
-<meta property="og:updated_time" content="2016-12-21T10:26:16.255Z">
+<meta property="og:updated_time" content="2016-12-21T16:54:24.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker安装与配置">
 <meta name="twitter:description" content="0x00 容器化技术01.市场需求之前一直在折腾各种微服务架构和开发框架，将一个单体应用拆解成很多个不同的，独立的，可复制的小模块，然后通过管理结构或者单纯的Gateway将他们联系起来。设计很美好，但总要面对分布式所带来的诸多问题，比如一致性，比如路径规划，比如容断处理等等。
@@ -324,7 +324,7 @@
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               <span class="post-meta-item-text">更新于</span>
-              <time title="更新于" itemprop="dateModified" datetime="2016-12-21T18:26:16+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2016-12-22T00:54:24+08:00">
                 2016-12-21
               </time>
             
@@ -388,11 +388,8 @@
 <p>Docker公司（之前叫dotCloud）的成功实际也反映了当前软件开发市场一些特点，本身是一家Paas公司，在大公司之间求生存，临死之际，将docker核心技术开源了，明确的应用场景，简单粗暴，还不要钱，各路程序员立马来了兴趣，懒人改变世界，只要几行命令，就能解决之前各种脚本的重复编写，也让容器化技术立马成为了开发部署的首选。  </p>
 <h3 id="02-技术角度"><a href="#02-技术角度" class="headerlink" title="02.技术角度"></a>02.技术角度</h3><p>Docker本身采用的C/S框架。<br>S端自然就是Docker的核心引擎，主要就是一个Docker Daemon，用来处理所有Container的建立，运行等等。<br>C端就是用来与S端进行交互的，主要就是一套CLI命令，通过Socket/API形式，让用户与Daemon之间进行通信，常见的docker run，docker pull…<br>Docker体系的构成除了操作命令外，主要有三个主体部件。  </p>
 <ol>
-<li>Images 镜像<br>Images 是最基本的可用部件，他是由一系列的Layer构成的。<br>Docker通过使用Linux底层的文件联合技术（UnionFS），将这些Layers组合到Images里面。<br>镜像本身的构成更像一个最基本的Stack结构，你需要为一个镜像增加新的功能，只需要push一个新layer就可以了，还不需要从0重新开始建立。<br>这个微服务架构的出发点是一致的，由多个独立的服务构成一个整体的服务，两者结构不同，Docker更多像个Stack，本身是一个从下往上堆叠的过程，微服务更像一个Network结构，每个服务之间更平等。<br>举例：我们本身已经有一个基本的Fedora的系统镜像，我需要在上面增加一个Fzug的repo。<br>常规我们在系统中执行：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget htp://repo.fdzh.org/FZUG/FZUG.repo -P /etc/yum.repo.d/</div></pre></td></tr></table></figure>
+<li><p>Images 镜像<br>Images 是最基本的可用部件，他是由一系列的Layer构成的。<br>Docker通过使用Linux底层的文件联合技术（UnionFS），将这些Layers组合到Images里面。<br>镜像本身的构成更像一个最基本的Stack结构，你需要为一个镜像增加新的功能，只需要push一个新layer就可以了，还不需要从0重新开始建立。<br>这个微服务架构的出发点是一致的，由多个独立的服务构成一个整体的服务，两者结构不同，Docker更多像个Stack，本身是一个从下往上堆叠的过程，微服务更像一个Network结构，每个服务之间更平等。<br>举例：我们本身已经有一个基本的Fedora的系统镜像，我需要在上面增加一个Fzug的repo。<br>常规我们在系统中执行：<br><strong><em>wget <a href="http://repo.fdzh.org/FZUG/FZUG.repo" target="_blank" rel="external">http://repo.fdzh.org/FZUG/FZUG.repo</a> -P /etc/yum.repo.d/</em></strong><br>在Docker中就是将上述命令增加到镜像描述文件（dockerfile）中。<br>在Dockerfile中增加命令行的操作，实际就是为镜像增加了一层layer。</p>
 </li>
-</ol>
-<p>在Docker中就是将上述命令增加到镜像描述文件（dockerfile）中。<br>在Dockerfile中增加命令行的操作，实际就是为镜像增加了一层layer。</p>
-<ol>
 <li><p>Container 容器<br>有了Image之后，我们要使用他的话，就是要建立一个Container来运行他，想象一下早期的虚拟光驱，ISO和光驱的关系，一个道理。<br>Container的价值就在于独立性上，容器都是基于镜像创建的，镜像本身更像一份声明，相同的镜像永远都是一致的，容器则是运行时的镜像，基于相同镜像创建的容器是相互独立的。<br>用户更多使用的对象就是容器，控制一个容器的创建，运行，停止，移动，删除，实际就能实现服务（镜像）的高可用，弹性部署等等一系列需求，所以Docker本身叫做容器化技术。<br>容器化的技术使用还有一个更关键的问题，就是容器的管理，简单的可以使用命令行管理，但如果容器数量过多，或者有容错，均衡等需求时，容器的自动化管理是很重要的，这带来的就是Google的K8s等容器管理平台，Docker公司自己本身有Swarm，也是容器管理工具，新版的docker已经整合了swarm，并号称5x faster than k8s，这种举动，有点像Windows自带IE的行为，最近也导致了一场技术战争，最终可能会导致新的容器技术的出现，拭目以待。</p>
 </li>
 <li><p>Registeries Center 仓库<br>Docker是开源的，最大的优势就体现在仓库上。<br>仓库是用来存放镜像的，就像github一样，各路程序员可以将自己创建的镜像，注册发布到docker仓库上，供大家使用和改进。<br>仓库也分公有和私有，公有的Docker仓库就是Docker Hub。里面有大量的镜像，基本可以满足各路需求。  </p>
@@ -411,12 +408,9 @@
 <li><p>确认系统是64位的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ uname -r</div><div class="line">4.8.14-300.fc25.x86_64</div></pre></td></tr></table></figure>
 </li>
-<li><p>增加docker repo  </p>
+<li><p>增加docker repo<br>目前Fedora最高支持到24，使用25的，请把$releasever手动定义为24</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ emacs /etc/yum.repo.d/docker-main.repo</div><div class="line">[docker-main-repo]</div><div class="line">name=Docker main Repository</div><div class="line">baseurl=https://yum.dockerproject.org/repo/main/fedora/$releasever/</div><div class="line">enabled=1</div><div class="line">gpgcheck=1</div><div class="line">gpgkey=https://yum.dockerproject.org/gpg</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>目前Fedora最高支持到24，使用25的，请把$releasever手动定义为24</p>
-<ol>
 <li><p>dnf安装  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@ivan]$ dnf install docker-engine</div></pre></td></tr></table></figure>
 </li>
@@ -468,7 +462,7 @@
 <li>docker attach 运行参数 容器名称 // 更高阶的交互手段</li>
 <li>……</li>
 </ol>
-<h2 id="0x03-后续计划"><a href="#0x03-后续计划" class="headerlink" title="0x03 后续计划"></a>0x03 后续计划</h2><ul>
+<h2 id="0x02-后续计划"><a href="#0x02-后续计划" class="headerlink" title="0x02 后续计划"></a>0x02 后续计划</h2><ul>
 <li>docker命令列表，食用指南</li>
 <li>传统java项目容器化部署实战</li>
 <li>Swarm介绍及配置</li>
@@ -669,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-容器化技术"><span class="nav-number">1.</span> <span class="nav-text">0x00 容器化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-市场需求"><span class="nav-number">1.1.</span> <span class="nav-text">01.市场需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-技术角度"><span class="nav-number">1.2.</span> <span class="nav-text">02.技术角度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Docker实践"><span class="nav-number">2.</span> <span class="nav-text">0x01 Docker实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-安装"><span class="nav-number">2.1.</span> <span class="nav-text">01.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-一些配置"><span class="nav-number">2.2.</span> <span class="nav-text">02. 一些配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储路径配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">存储路径配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仓库镜像配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">仓库镜像配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他配置"><span class="nav-number">2.2.3.</span> <span class="nav-text">其他配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-简单的运行"><span class="nav-number">2.3.</span> <span class="nav-text">03. 简单的运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-后续计划"><span class="nav-number">3.</span> <span class="nav-text">0x03 后续计划</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-容器化技术"><span class="nav-number">1.</span> <span class="nav-text">0x00 容器化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-市场需求"><span class="nav-number">1.1.</span> <span class="nav-text">01.市场需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-技术角度"><span class="nav-number">1.2.</span> <span class="nav-text">02.技术角度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Docker实践"><span class="nav-number">2.</span> <span class="nav-text">0x01 Docker实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-安装"><span class="nav-number">2.1.</span> <span class="nav-text">01.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-一些配置"><span class="nav-number">2.2.</span> <span class="nav-text">02. 一些配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储路径配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">存储路径配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仓库镜像配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">仓库镜像配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他配置"><span class="nav-number">2.2.3.</span> <span class="nav-text">其他配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-简单的运行"><span class="nav-number">2.3.</span> <span class="nav-text">03. 简单的运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-后续计划"><span class="nav-number">3.</span> <span class="nav-text">0x02 后续计划</span></a></li></ol></div>
             
 
           </div>
