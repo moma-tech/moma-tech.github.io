@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Function,Self-Study," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0x00 背景JAVA 8 已经出来很久了，而且应该很快就能看到JAVA 9了，应该是下半年吧。之前读了两本JAVA 8的书，一本是简单的介绍《写给大忙人看的Java SE 8》，一本主要讲函数式编程的《Java 8函数式编程》。其实读完了，关于函数式编程的内容没记住多少，只知道Stream和Lambda很流弊，直观感觉还是停留在美化和简化代码的层面上，题外话：这里需要吐槽下译者。最近又开始搞微服">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA8-函数式编程-自学手册（一）">
+<meta property="og:url" content="https://moma-tech.github.io/2017/04/06/JAVA8-函数式编程-自学手册/index.html">
+<meta property="og:site_name" content="Moma-Tech">
+<meta property="og:description" content="0x00 背景JAVA 8 已经出来很久了，而且应该很快就能看到JAVA 9了，应该是下半年吧。之前读了两本JAVA 8的书，一本是简单的介绍《写给大忙人看的Java SE 8》，一本主要讲函数式编程的《Java 8函数式编程》。其实读完了，关于函数式编程的内容没记住多少，只知道Stream和Lambda很流弊，直观感觉还是停留在美化和简化代码的层面上，题外话：这里需要吐槽下译者。最近又开始搞微服">
+<meta property="og:updated_time" content="2017-04-07T09:47:07.405Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA8-函数式编程-自学手册（一）">
+<meta name="twitter:description" content="0x00 背景JAVA 8 已经出来很久了，而且应该很快就能看到JAVA 9了，应该是下半年吧。之前读了两本JAVA 8的书，一本是简单的介绍《写给大忙人看的Java SE 8》，一本主要讲函数式编程的《Java 8函数式编程》。其实读完了，关于函数式编程的内容没记住多少，只知道Stream和Lambda很流弊，直观感觉还是停留在美化和简化代码的层面上，题外话：这里需要吐槽下译者。最近又开始搞微服">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6361626845636462000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://moma-tech.github.io/2017/04/06/JAVA8-函数式编程-自学手册/"/>
+
+
+
+
+
+  <title> JAVA8-函数式编程-自学手册（一） | Moma-Tech </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Moma-Tech</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://moma-tech.github.io/2017/04/06/JAVA8-函数式编程-自学手册/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Ivan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Moma-Tech">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Moma-Tech" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JAVA8-函数式编程-自学手册（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-06T08:35:00+08:00">
+                2017-04-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2017-04-07T17:47:07+08:00">
+                2017-04-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程开发/" itemprop="url" rel="index">
+                    <span itemprop="name">编程开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/04/06/JAVA8-函数式编程-自学手册/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/06/JAVA8-函数式编程-自学手册/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-背景"><a href="#0x00-背景" class="headerlink" title="0x00 背景"></a>0x00 背景</h2><p>JAVA 8 已经出来很久了，而且应该很快就能看到JAVA 9了，应该是下半年吧。<br>之前读了两本JAVA 8的书，一本是简单的介绍<a href="https://item.jd.com/11583896.html" target="_blank" rel="external">《写给大忙人看的Java SE 8》</a>，一本主要讲函数式编程的<a href="https://item.jd.com/11673259.html" target="_blank" rel="external">《Java 8函数式编程》</a>。<br>其实读完了，关于函数式编程的内容没记住多少，只知道Stream和Lambda很流弊，直观感觉还是停留在美化和简化代码的层面上，题外话：这里需要吐槽下译者。<br>最近又开始搞微服务架构了，为什么要用又呢，那真是一个令人悲伤的故事。😢<br>期间在阅读一些神人的代码的过程中，看到了不少Lambda Function，也写了一些，确实在可读性和可观赏性上很有优势，尤其结合领域驱动和微服务架构理论，函数编程的一些约束性原则可以更好的强化设计思路和代码质量。<br>借此，整理下一些函数编程的相关知识和个人理解，暂时定义为自学手册吧。  </p>
+<font size="6"><strong><em>大字说明：我写我的，你瞅你的。 👓 </em></strong><br><strong><em>Talk Is Cheap，so Let‘s Start with Talk</em></strong></font>  
+
+<h2 id="0x01-函数式编程是什么❓"><a href="#0x01-函数式编程是什么❓" class="headerlink" title="0x01. 函数式编程是什么❓"></a>0x01. 函数式编程是什么❓</h2><p>如果你像我一样，经历过Basic，Pascal，C的光辉年代，或者现在使用过Haskell，Scala一类的编程语言，那对比下JAVA的面对对象或者PHP的面对过程，应该很容易就能够说清楚函数式编程。是的，此处我在炫耀我知道很多编程语言的名字🌟。<br>针对很多只用过JAVA的小朋友们，可能就没那么容易理解了，so，简单介绍一下。<br>函数：<br>$$f(x_1,x_2,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2$$<br>以上是一个标准的数学函数，有N个输入，然后1个输出，涉及2种运算，这就是函数的数学表现形式，上过学的都知道～（是的，我又在炫耀💳 )<br>相关的函数式编程，引用WIKI的定义：</p>
+<blockquote>
+<p>In computer science, functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids state and mutable data.  </p>
+</blockquote>
+<p>函数式编程本质是一种<strong><em>编程范式</em></strong>，函数是其核心，就像面对对象中的对象object一样，函数就是函数式编程中的第一型态，first class，也叫一等公民。👲<br>函数式编程把运算理解为<strong><em>数学函数的演算</em></strong>，比如1+1，理解为运行加法函数，参数是1和1，类比一下，过程式编程，现在有一个1，然后在他上面进行增加，增加一个1，而面对对象编程，两个对象1，然后使用加法形成一个新的对象。（就这么理解吧。。反正结果都是2）。<br>同时函数避免了<strong><em>状态和可变数据</em></strong>，这个相对要好理解一点，参考数学函数，函数本是就是接参，出参，简单直接，不存在变量，或者函数体外的参数。<br>比如上述公式，正常的JAVA编程可能是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Double sum = <span class="number">0.0</span>;</div><div class="line">List&lt;Double&gt; paras = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">paras.add(<span class="number">1.0</span>);</div><div class="line">paras.add(<span class="number">2.0</span>);</div><div class="line">paras.add(<span class="number">3.0</span>);</div><div class="line">paras.add(<span class="number">4.0</span>);</div><div class="line">paras.add(<span class="number">5.0</span>);</div><div class="line">paras.add(<span class="number">6.0</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;paras.size();i++)&#123;</div><div class="line">sum = sum + paras.get[i]*paras.get[i];</div><div class="line">&#125;</div><div class="line">System.out.println(<span class="string">"sum = "</span>+sum);</div></pre></td></tr></table></figure></p>
+<p>如果现在使用函数式编程，那看起来是这个样子的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Reduce Way</span></div><div class="line">Double sum2= Stream.of(<span class="number">10000.0</span>,<span class="number">20000.0</span>,<span class="number">30000.0</span>,<span class="number">40000.0</span>,<span class="number">50000.0</span>,<span class="number">60000.0</span>)</div><div class="line">                   .reduce(<span class="number">0.0</span>, ( acc,  element)-&gt;acc + Math.pow(element,<span class="number">2</span>));</div><div class="line">                   </div><div class="line">System.out.println(sum2);</div><div class="line"><span class="comment">// Summary Statistics</span></div><div class="line">DoubleSummaryStatistics dss = Stream.of(<span class="number">10000.0</span>,<span class="number">20000.0</span>,<span class="number">30000.0</span>,<span class="number">40000.0</span>,<span class="number">50000.0</span>,<span class="number">60000.0</span>)</div><div class="line">                                    .mapToDouble(element -&gt; Math.pow(element,<span class="number">2</span>))</div><div class="line">                                    .summaryStatistics();</div><div class="line">                                    </div><div class="line">System.out.println(dss.getSum());</div></pre></td></tr></table></figure></p>
+<p>这个例子可能有点跳，懒得写更直观的了，看不懂没关系，先感受下，这里请牢记，我们的目标不是为了多学东西，而是怎么能让自己可以更懒～<br>熟悉JAVA的人可以读懂这里的大部分，不就是各种方法的调用吗，唯一有疑惑的就是那个箭头运算符，可能之前比较少见。<br>OK，这里就有接下来两个可以讨论的点了，</p>
+<ul>
+<li><strong><em>所谓的函数和方法的区别</em></strong>💍</li>
+<li><strong><em>这个箭头运算是什么</em></strong>🔀  </li>
+</ul>
+<h2 id="0x02-你有没有对象啊～😆"><a href="#0x02-你有没有对象啊～😆" class="headerlink" title="0x02. 你有没有对象啊～😆"></a>0x02. 你有没有对象啊～😆</h2><p>先来讨论第一个函数和方法的区别。这里特指JAVA中的方法。<br>什么是函数式编程的函数，什么又是面对对象的方法～～<br>首先，什么是OO里面的方法：<br>概念上，方法就是对象的行为描述，<strong><em>方法是对象的</em></strong>；<br>形态上，方法有命名，有作用范围，有参数，有返回值；<br>作用上，方法可以返回状态，改变状态，可以作为对象间的交互手段。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span></span>&#123;</div><div class="line">	  <span class="keyword">private</span> <span class="keyword">int</span> door;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> wheel;</div><div class="line">    </div><div class="line">    <span class="comment">// 我是一个方法，我改变了door的值</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDoor</span><span class="params">(<span class="keyword">int</span> door)</span></span>&#123;</div><div class="line">    	<span class="keyword">this</span>.door = door;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 我也是方法，我没有输入</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDoor</span><span class="params">()</span></span>&#123;</div><div class="line">    	<span class="keyword">return</span> door;</div><div class="line">    &#125;</div><div class="line">    ....</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在对比看函数，<br>首先函数和对象没有任何关系，只是描述了一种运算行为，<strong><em>函数是大家的</em></strong>；<br>函数要有输入和输出，同时输入可以是值，也可以是其他函数。<br>函数规避了状态和可变数据，也就意味着函数不应该有<strong><em>Side Effect</em></strong>，当然你硬要写，目前JAVA也拿你没办法，比如你throw一个exception，但是也有部分语言，比如haskell对这一块有严格的check。<br>以上面的代码举例：<br>setDoor方法，修改了对象属性door的值，这是一个标准的side effect，所以严格意义上他不是一个标准函数。<br>getDoor方法，没有输入，凭空输出了一个方法体外的door值，这也不是一个标准函数。</p>
+<p>从一个角度来来说，<strong><em>函数可以看作特殊的方法</em></strong>，要有输入输出，没有side effect；<br>另一角度，<strong><em>方法也可以看作对象内部函数，全局静态方法看作一般函数</em></strong>，比如常见的UTIL类。  </p>
+<p>其实两者的区别更多在形成的历史背景，概念和一些使用约定上，例如在C时代，只有函数，但是那个时候的函数和现在的方法很像。<br>实际编码过程中，尤其在JAVA 8中，两者并没有刻意的区分，能躲猫的都是好老鼠。🐁<br>也因此目前函数式编程在JAVA中的使用，更多是在简化编码，增强可读性，改善编码质量。当然也有高级应用，我后面会说。<br>尤其在复杂逻辑运算的编码过程中，直观的，行数少的，没有side effect的函数式写法，可以大大降低圈复杂度，降低错误率和调试难度。<br>总结一下，<strong><em>有对象的叫方法，没对象的叫函数。</em></strong><br>so，程序员要多了解自己。  </p>
+<p>到此，第一个问题解决完了，我们下一篇再讨论第二个问题。<br>我给他起了个很腹黑的题目：<br><strong><em>0x03. 一切罪恶之源-数学</em></strong><br>敬请期待，没准啥时候！！💸</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/Function/" rel="tag"># Function</a>
+          
+            <a href="/tags/Self-Study/" rel="tag"># Self-Study</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/24/Hexo个人Blog初级配置/" rel="next" title="Hexo个人Blog初级配置">
+                <i class="fa fa-chevron-left"></i> Hexo个人Blog初级配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/06/JAVA8-函数式编程-自学手册/"
+     data-title="JAVA8-函数式编程-自学手册（一）"
+     data-content=""
+     data-url="https://moma-tech.github.io/2017/04/06/JAVA8-函数式编程-自学手册/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/06/JAVA8-函数式编程-自学手册/"
+           data-title="JAVA8-函数式编程-自学手册（一）" data-url="https://moma-tech.github.io/2017/04/06/JAVA8-函数式编程-自学手册/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100"
+               alt="Ivan" />
+          <p class="site-author-name" itemprop="name">Ivan</p>
+          <p class="site-description motion-element" itemprop="description">生如夏花之绚烂，死如秋叶之静美</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/moma-tech" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-背景"><span class="nav-text">0x00 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-函数式编程是什么❓"><span class="nav-text">0x01. 函数式编程是什么❓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-你有没有对象啊～😆"><span class="nav-text">0x02. 你有没有对象啊～😆</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ivan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"moma-tech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
