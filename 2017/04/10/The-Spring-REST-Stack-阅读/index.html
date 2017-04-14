@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,REST,Note," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Artical Link : The Spring REST Stack - Josh Long
+0x00 背景现在的应用特点：  
+
+distributed 分布
+protable 便携
+mobile 移动
+integrated 整合
+social 社交
+connected 链接  
+
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The-Spring-REST-Stack-阅读">
+<meta property="og:url" content="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/index.html">
+<meta property="og:site_name" content="Moma-Tech">
+<meta property="og:description" content="Artical Link : The Spring REST Stack - Josh Long
+0x00 背景现在的应用特点：  
+
+distributed 分布
+protable 便携
+mobile 移动
+integrated 整合
+social 社交
+connected 链接  
+
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
+<meta property="og:updated_time" content="2017-04-10T10:00:54.697Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The-Spring-REST-Stack-阅读">
+<meta name="twitter:description" content="Artical Link : The Spring REST Stack - Josh Long
+0x00 背景现在的应用特点：  
+
+distributed 分布
+protable 便携
+mobile 移动
+integrated 整合
+social 社交
+connected 链接  
+
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6361626845636462000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/"/>
+
+
+
+
+
+  <title> The-Spring-REST-Stack-阅读 | Moma-Tech </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Moma-Tech</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Ivan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Moma-Tech">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Moma-Tech" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                The-Spring-REST-Stack-阅读
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-10T19:34:36+08:00">
+                2017-04-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2017-04-10T18:00:54+08:00">
+                2017-04-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/04/10/The-Spring-REST-Stack-阅读/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/The-Spring-REST-Stack-阅读/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Artical Link : <a href="https://github.com/joshlong/the-spring-rest-stack/blob/master/tutorial.asc" target="_blank" rel="external">The Spring REST Stack - Josh Long</a></p>
+<h2 id="0x00-背景"><a href="#0x00-背景" class="headerlink" title="0x00 背景"></a>0x00 背景</h2><p>现在的应用特点：  </p>
+<ul>
+<li>distributed 分布</li>
+<li>protable 便携</li>
+<li>mobile 移动</li>
+<li>integrated 整合</li>
+<li>social 社交</li>
+<li>connected 链接  </li>
+</ul>
+<p>手机和平板等便携设备，决定了现代应用可以随身携带。<br>这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，CORBA。更多的在使用REST。  </p>
+<h2 id="0x01-理查德森成熟模型"><a href="#0x01-理查德森成熟模型" class="headerlink" title="0x01 理查德森成熟模型"></a>0x01 理查德森成熟模型</h2><p>REST 是由 DR.Roy Fielding于2000年他的博士论文中提出的，完全基于HTTP协议。同时他更多的是一种通信风格，还不是一种标准。<br>REST 不是一种要么完全选择要么就放弃的技术，通常，用户更多选择去包含REST中的部分，去更有效率的配合他们的场景。<br>目前APIs经常会被称为“RESTful”，当然这要根据它们对REST原则的遵守情况。<br>我们可以使用理查德森成熟模型来对REST APIs进行分类辨别。<br>Matain Fowler针对这个模型有过一次详细的介绍，<a href="http://martinfowler.com/articles/richardsonMaturityModel.html" target="_blank" rel="external">Expaining the concepts</a>，下面是一个简短的版本：  </p>
+<ul>
+<li><strong><em>Level 0 The Swamp of POX</em></strong><br>当使用HTTP纯粹作为通信手段的时候，API通常会处于这个此等级。例如，目前很多的SOAP服务都是基于HTTP，实际完全可以通过JMS或者SMTP实现。这一类的服务通常我们认为式最初级的RESTFUL。POX指的是老式的文本XML（Plain Old Xml），同时大部分处于此级别的技术，比如SOAP、RPC-XML，使用HTTP传输使用XML编码的数据信息，通常基于远程过程调用的语义模型，一般是SCHEMA。  </li>
+<li><strong><em>Level 1 Resources</em></strong><br>在这个级别，一个单体服务节点可以被扩展到多个，用于区分HTTP资源，通常一个资源对应系统中的一个对象，比如一条消费记录，或者一个用户记录。通常这些资源的相关联了其他资源，表现在他的拓扑URI表述中。比如，你可以暴露你系统中的每单个资源，例如 /user/1，/user/2.</li>
+<li><strong><em>Level 2 Transpost Native Properties</em></strong><br>在这个级别，API的设计构建使用了HTTP中的特殊声明定义，例如头信息（headers），状态码（status code），以及动词（get，post，delete…）。这些构成了一个更为标准的HTTP API，同时也只有这个级别才会被认为初步使用了REST框架设计。  </li>
+<li><strong><em>Level 3 Hypermedia</em></strong><br>这个终极级别，主要是基于HATEOAS（HyperText As The Engine Of Application State)。他包括API与URI拓扑之间的解耦，以及通过响应中的元数据信息向客户端暴露可用的浏览选项。该元数据信息通常使用包装结构来传输，通常为一系列的链接，同时该信息能够被正确表达和理解。</li>
+</ul>
+<p>通常大部分的REST框架，可以帮助你处于level 2，例如使用Spring MVC，默认便是此级别。  </p>
+<blockquote>
+<p>此处补充下HATEOAS，未使用HATEOAS，客户端依然需要服务端提供相关的文档，以了解暴露的资源和对应的操作。同时当服务端发生变化，比如修改了URI，客户端需要作对应的修改。而使用HATEOAS，所有的资源都将通过响应来表达，客户端可以基于此表达，智能发现可行操作。当服务端发生变化时，客户端不受任何影响，因为URI和其他信息都是动态发现的。  </p>
+</blockquote>
+<p>下面我们使用Spring MVC创建一个REST API，首先定义下相关的领域。</p>
+<h2 id="0x02-Customer-Relationship-Manager"><a href="#0x02-Customer-Relationship-Manager" class="headerlink" title="0x02 Customer Relationship Manager"></a>0x02 Customer Relationship Manager</h2><p>首先我们设定一个简单的模型：User 实体包含 Customer Record 集合。<br>我们的Service层<strong><em>CrmService</em></strong>包含以下约定，用来支持User信息和Customer Record的相关操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CrmService</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function">ProfilePhoto <span class="title">readUserProfilePhoto</span><span class="params">(<span class="keyword">long</span> userId)</span></span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">writeUserProfilePhoto</span><span class="params">(<span class="keyword">long</span> userId, MediaType mediaType, <span class="keyword">byte</span>[] bytesForProfilePhoto)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">findById</span><span class="params">(<span class="keyword">long</span> userId)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">createUser</span><span class="params">(String username, String password, String firstName, String lastName)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">removeUser</span><span class="params">(<span class="keyword">long</span> userId)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">updateUser</span><span class="params">(<span class="keyword">long</span> userId, String username, String password, String firstName, String lastName)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">findUserByUsername</span><span class="params">(String username)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">Customer <span class="title">removeAccount</span><span class="params">(<span class="keyword">long</span> userId, <span class="keyword">long</span> customerId)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">Customer <span class="title">addAccount</span><span class="params">(<span class="keyword">long</span> userId, String firstName, String lastName)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">Collection&lt;Customer&gt; <span class="title">loadCustomerAccounts</span><span class="params">(<span class="keyword">long</span> userId)</span></span>;</div><div class="line"></div><div class="line">	<span class="function">Customer <span class="title">findCustomerById</span><span class="params">(<span class="keyword">long</span> customerId)</span></span>;</div><div class="line"></div><div class="line">	<span class="comment">// simple abstraction to hold</span></div><div class="line">	<span class="comment">// information about the profile photo.</span></div><div class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ProfilePhoto</span> </span>&#123;</div><div class="line"></div><div class="line">		<span class="keyword">private</span> Long userId;</div><div class="line">		<span class="keyword">private</span> <span class="keyword">byte</span>[] photo;</div><div class="line">		<span class="keyword">private</span> MediaType mediaType;</div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="title">ProfilePhoto</span><span class="params">(<span class="keyword">long</span> userId, <span class="keyword">byte</span>[] data, MediaType mediaType)</span> </span>&#123;</div><div class="line">			<span class="keyword">this</span>.mediaType = mediaType;</div><div class="line">			<span class="keyword">this</span>.photo = data;</div><div class="line">			<span class="keyword">this</span>.userId = userId;</div><div class="line">		&#125;</div><div class="line">		<span class="function"><span class="keyword">public</span> MediaType <span class="title">getMediaType</span><span class="params">()</span> </span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.mediaType;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">public</span> <span class="keyword">byte</span>[] getPhoto() &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.photo;</div><div class="line">		&#125;</div><div class="line">		<span class="function"><span class="keyword">public</span> Long <span class="title">getUserId</span><span class="params">()</span> </span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.userId;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来，我们要声明一个基于USER的Repository。这里我们将使用Spring Data JPA。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.data.repository.PagingAndSortingRepository;</div><div class="line"><span class="keyword">import</span> org.springframework.data.repository.query.Param;</div><div class="line"><span class="keyword">import</span> org.springframework.data.rest.repository.annotation.RestResource;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserRepository</span> <span class="keyword">extends</span> <span class="title">PagingAndSortingRepository</span>&lt;<span class="title">User</span>, <span class="title">Long</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">	<span class="function">User <span class="title">findByUsername</span><span class="params">(@Param (<span class="string">"username"</span>)</span> String username)</span>;</div><div class="line"></div><div class="line">	<span class="function">List&lt;User&gt; <span class="title">findUsersByFirstNameOrLastNameOrUsername</span><span class="params">(</span></span></div><div class="line">		@Param (<span class="string">"firstName"</span>) String firstName,</div><div class="line">		@<span class="title">Param</span> <span class="params">(<span class="string">"lastName"</span>)</span> String lastName,</div><div class="line">		@<span class="title">Param</span> <span class="params">(<span class="string">"username"</span>)</span> String username);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们使用了<strong><em>PagingAndSortingREpository</em></strong>，它提供了基于JPA实体的常见的方法。这里我们声明绑定的实体为User，然后其包含一个Long类型的主键（userId）。  </p>
+<p>我们可以看到这个接口中包含两个方法，<strong><em>findByUsername</em></strong> 和 <strong><em>findUsersByFirstNameOrLastNameOrUsername</em></strong>。这些接口方法的具体实现将会由Spring data动态生成。例如<strong><em>findUsersByFirstNameOrLastNameOrUsername</em></strong>方法，将会通过使用JPA的EntityManager去执行一个JPA查询，大致类似<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> U <span class="keyword">FROM</span> <span class="keyword">User</span> U <span class="keyword">WHERE</span> U.firstName = ? <span class="keyword">OR</span> U.lastName = ? <span class="keyword">OR</span> U.username = ?</div></pre></td></tr></table></figure></p>
+<h2 id="0x03-The-Web-Application"><a href="#0x03-The-Web-Application" class="headerlink" title="0x03 The Web Application"></a>0x03 The Web Application</h2><p>Web应用，主要指我们的REST API是一个符合Servlet-3标准的Spring MVC应用。这里我们使用Servlet 3工具集来通过程序引导相关的容器，对应的是传统的使用web.xml。  </p>
+<blockquote>
+<p>此处记录下，Spring Boot支持多种容器引导形式，可以用于取代传统的web.xml，常见的有使用<strong><em>WebApplicationInitializer</em></strong>，以及这里的<strong><em>AbstractAnnotationConfigDispatcherServletInitializer</em></strong>，但是大多数情况下，可以直接使用<strong><em>SpringBootServletInitializer</em></strong></p>
+</blockquote>
+<p><strong><em>CrmWebApplicationInitializer</em></strong>主要配置了一个SpringMVC应用的标准2层结构。</p>
+<ul>
+<li>web-application-global Spring contexts，Spring的全局上下文配置。</li>
+<li>Template methods，用于注册Servlet的类型结构，例如Filter实例，同时自定义其注册形式。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CrmWebApplicationInitializer</span> <span class="keyword">extends</span> <span class="title">AbstractAnnotationConfigDispatcherServletInitializer</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> maxUploadSizeInMb = <span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 5 MB</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> Class&lt;?&gt;[] getRootConfigClasses() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Class&lt;?&gt;[]&#123;ServiceConfiguration.class&#125;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> Class&lt;?&gt;[] getServletConfigClasses() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Class&lt;?&gt;[]&#123;WebMvcConfiguration.class&#125;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> String[] getServletMappings() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> String[]&#123;<span class="string">"/"</span>&#125;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> Filter[] getServletFilters() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Filter[]&#123;<span class="keyword">new</span> HiddenHttpMethodFilter(), <span class="keyword">new</span> MultipartFilter()&#125;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">customizeRegistration</span><span class="params">(ServletRegistration.Dynamic registration)</span> </span>&#123;</div><div class="line">		File uploadDirectory = ServiceConfiguration.CRM_STORAGE_UPLOADS_DIRECTORY;</div><div class="line">		MultipartConfigElement multipartConfigElement = <span class="keyword">new</span> MultipartConfigElement(</div><div class="line">		   uploadDirectory.getAbsolutePath(),</div><div class="line">		   maxUploadSizeInMb,</div><div class="line">		   maxUploadSizeInMb * <span class="number">2</span>,</div><div class="line">		   maxUploadSizeInMb / <span class="number">2</span>);</div><div class="line">		registration.setMultipartConfig(multipartConfigElement);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外一个<strong><em>WebMvcConfiguration</em></strong>使用了EnableWebMvc注解，同时指定了Spring’s的MultipartResolver使用Servlet 3中的实现。这个实现用来明确Spring如何对待文件上传。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="meta">@EnableWebMvc</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebMvcConfiguration</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Bean</span></div><div class="line">	<span class="function"><span class="keyword">public</span> MultipartResolver <span class="title">multipartResolver</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> StandardServletMultipartResolver();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中<strong><em>@EnableWebMvc</em></strong>注解，其提供了一系列的功能。<br>在这里，Spring MVC将会自动完成：</p>
+<ul>
+<li>支持Classpath中声明的 JAXB 实现，用于在REST服务中进行object-to-xml的编译</li>
+<li>支持Classpath中声明的校验器，如Hibernate Validator，用于使用JSR 303标准注解校验请求中的信息内容</li>
+<li>支持</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/REST/" rel="tag"># REST</a>
+          
+            <a href="/tags/Note/" rel="tag"># Note</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/JAVA8-函数式编程-自学手册/" rel="next" title="JAVA8-函数式编程-自学手册（一）">
+                <i class="fa fa-chevron-left"></i> JAVA8-函数式编程-自学手册（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/14/Hadoop环境搭建-(一）/" rel="prev" title="Hadoop环境搭建(一）">
+                Hadoop环境搭建(一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/10/The-Spring-REST-Stack-阅读/"
+     data-title="The-Spring-REST-Stack-阅读"
+     data-content=""
+     data-url="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/10/The-Spring-REST-Stack-阅读/"
+           data-title="The-Spring-REST-Stack-阅读" data-url="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100"
+               alt="Ivan" />
+          <p class="site-author-name" itemprop="name">Ivan</p>
+          <p class="site-description motion-element" itemprop="description">生如夏花之绚烂，死如秋叶之静美</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/moma-tech" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-背景"><span class="nav-text">0x00 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-理查德森成熟模型"><span class="nav-text">0x01 理查德森成熟模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Customer-Relationship-Manager"><span class="nav-text">0x02 Customer Relationship Manager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-The-Web-Application"><span class="nav-text">0x03 The Web Application</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ivan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"moma-tech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

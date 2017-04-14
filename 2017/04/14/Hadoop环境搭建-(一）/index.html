@@ -1,0 +1,851 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,VirtualBox,CentOS,SSH," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0x00 背景最近参加了一个SPARK的在线课程，增加自己的知识广度。任何新的技术，第一个实践门槛，必然是环境的搭建。所以记录一下实际搭建的过程。这次先记录一下基础环境的准备。  
+01. 计划
+主机
+我亲爱的Fedora 25
+
+
+虚拟机
+使用Virtual Box
+4台
+CentOS 7 minimal
+
+
+4台机器，组hadoop集群，名称分别为：
+hadoop.master
+hadoop.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop环境搭建(一）">
+<meta property="og:url" content="https://moma-tech.github.io/2017/04/14/Hadoop环境搭建-(一）/index.html">
+<meta property="og:site_name" content="Moma-Tech">
+<meta property="og:description" content="0x00 背景最近参加了一个SPARK的在线课程，增加自己的知识广度。任何新的技术，第一个实践门槛，必然是环境的搭建。所以记录一下实际搭建的过程。这次先记录一下基础环境的准备。  
+01. 计划
+主机
+我亲爱的Fedora 25
+
+
+虚拟机
+使用Virtual Box
+4台
+CentOS 7 minimal
+
+
+4台机器，组hadoop集群，名称分别为：
+hadoop.master
+hadoop.">
+<meta property="og:updated_time" content="2017-04-14T08:17:04.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop环境搭建(一）">
+<meta name="twitter:description" content="0x00 背景最近参加了一个SPARK的在线课程，增加自己的知识广度。任何新的技术，第一个实践门槛，必然是环境的搭建。所以记录一下实际搭建的过程。这次先记录一下基础环境的准备。  
+01. 计划
+主机
+我亲爱的Fedora 25
+
+
+虚拟机
+使用Virtual Box
+4台
+CentOS 7 minimal
+
+
+4台机器，组hadoop集群，名称分别为：
+hadoop.master
+hadoop.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6361626845636462000',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://moma-tech.github.io/2017/04/14/Hadoop环境搭建-(一）/"/>
+
+
+
+
+
+  <title> Hadoop环境搭建(一） | Moma-Tech </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Moma-Tech</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://moma-tech.github.io/2017/04/14/Hadoop环境搭建-(一）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Ivan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Moma-Tech">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Moma-Tech" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop环境搭建(一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-14T23:01:07+08:00">
+                2017-04-14
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2017-04-14T16:17:04+08:00">
+                2017-04-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据技术/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/04/14/Hadoop环境搭建-(一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/14/Hadoop环境搭建-(一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0x00-背景"><a href="#0x00-背景" class="headerlink" title="0x00 背景"></a>0x00 背景</h2><p>最近参加了一个SPARK的在线课程，增加自己的知识广度。<br>任何新的技术，第一个实践门槛，必然是环境的搭建。<br>所以记录一下实际搭建的过程。<br>这次先记录一下基础环境的准备。  </p>
+<h3 id="01-计划"><a href="#01-计划" class="headerlink" title="01. 计划"></a>01. 计划</h3><ul>
+<li>主机<ul>
+<li>我亲爱的Fedora 25</li>
+</ul>
+</li>
+<li>虚拟机<ul>
+<li>使用Virtual Box</li>
+<li>4台</li>
+<li>CentOS 7 minimal</li>
+</ul>
+</li>
+<li>4台机器，组hadoop集群，名称分别为：<ul>
+<li>hadoop.master</li>
+<li>hadoop.slave01</li>
+<li>hadoop.slave02</li>
+<li>hadoop.slave03   </li>
+</ul>
+</li>
+</ul>
+<h3 id="02-需要优先下载的软件包"><a href="#02-需要优先下载的软件包" class="headerlink" title="02. 需要优先下载的软件包"></a>02. 需要优先下载的软件包</h3><ol>
+<li>CentOS 7 的ISO</li>
+<li>Oracle jdk8，我下的是jdk1.8.0_112</li>
+</ol>
+<h2 id="0x01-虚拟机配置"><a href="#0x01-虚拟机配置" class="headerlink" title="0x01.虚拟机配置"></a>0x01.虚拟机配置</h2><p>主要是网络配置，要保证机器之间的互通。<br>使用VirtualBox的话，可以采取双网络的策略。<br>第一个网络配置为NAT模式，保证虚拟机可以联通外部网络，从互联网上安装必要软件。<br>第二个网络配置为HOSTONLY模式，保证主机与虚拟机之间共享一个vnet，这样相互之间可以互通。<br>硬件参数上，以实际情况来配置，不过要满足centos的基本需求。  </p>
+<h2 id="0x02-CentOS安装配置"><a href="#0x02-CentOS安装配置" class="headerlink" title="0x02.CentOS安装配置"></a>0x02.CentOS安装配置</h2><p>安装教程不赘述，这里如果安装过程中没配置网络的话，可以启动后通过配置文件配置。<br>其中配置要点包括<br><strong><em>同时此处建议增加hadoop用户，不建议使用root进行后续安装操作。</em></strong></p>
+<h3 id="01-网络配置"><a href="#01-网络配置" class="headerlink" title="01.网络配置"></a>01.网络配置</h3><ol>
+<li>开机启动</li>
+<li>HOST-ONLY网卡配置静态IP<br><strong><em>相关脚本</em></strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cd /etc/sysconfig/network-script/</div><div class="line"></div><div class="line">vi ifcfg-enxxxx</div><div class="line"></div><div class="line">   ONBOOT=yes</div><div class="line">   </div><div class="line">   &lt;!-- for Host Only --&gt;</div><div class="line">   BOOTPROTO=static</div><div class="line">   IPADDR = 192.168.56.100</div><div class="line">   NETMASK= 255.255.255.0</div><div class="line">   </div><div class="line">service network restart</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="02-防火墙配置"><a href="#02-防火墙配置" class="headerlink" title="02.防火墙配置"></a>02.防火墙配置</h3><p><strong><em>这是本地测试环境，所以直接就关掉了，实际生产环境，还是要按照网络拓扑编写iptables的相关策略</em></strong>  </p>
+<ol>
+<li>关闭防火墙</li>
+<li>关闭SELINUX<br><strong><em>相关脚本</em></strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">chkconfig firewalld off //永久关闭防火墙</div><div class="line"></div><div class="line">setenforce 0 //临时关闭SELINUX</div><div class="line"></div><div class="line">vi /etc/selinux/config</div><div class="line"> </div><div class="line">  SELINUX=disable</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="03-Host配置"><a href="#03-Host配置" class="headerlink" title="03.Host配置"></a>03.Host配置</h3><ol>
+<li>修改主机名</li>
+<li>增加主机名</li>
+<li>增加集群节点<br><strong><em>相关脚本</em></strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 配置主机名</div><div class="line">hostnamectl set-hostname hadoop.master</div><div class="line"></div><div class="line">// 配置节点解析，增加到localhost之前</div><div class="line">192.168.56.100	hadoop.master</div><div class="line">192.168.56.101	hadoop.slave01</div><div class="line">....</div><div class="line">127.0.0.1		localhost</div><div class="line">::1			localhost</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="0x03-应用安装"><a href="#0x03-应用安装" class="headerlink" title="0x03 应用安装"></a>0x03 应用安装</h2><h3 id="01-JDK安装"><a href="#01-JDK安装" class="headerlink" title="01.JDK安装"></a>01.JDK安装</h3><ol>
+<li>选择性安装openJDK</li>
+<li>解压tar</li>
+<li>使用alternative安装和配置oracle jdk</li>
+<li>增加PATH<br><strong><em>相关脚本</em></strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 安装open jdk</div><div class="line">yum install java</div><div class="line"></div><div class="line">// 解压tar包</div><div class="line">tar -xzvf jdk.tar -C /opt/java</div><div class="line"></div><div class="line">// 创建新的JAVA Alt</div><div class="line">alternatives --install /usr/bin/java java /opt/java/jdk1.8.0_112/bin/java </div><div class="line"></div><div class="line">// 启用oracle jdk，选择2</div><div class="line">alternatives --config java</div><div class="line"></div><div class="line">// 增加环境变量</div><div class="line">vi /etc/profile.d/path.sh</div><div class="line">    export JAVA_HOME=/opt/java/jdlk1.8.0_112</div><div class="line">    export JRE_HOME=/opt/java/jdk1.8.0_112/jre</div><div class="line">    export PATH=$PATH:/opt/java/jdk1.8.0_112/bin:/opt/java/jdk1.8.0_112/jre/bin</div><div class="line"></div><div class="line">// 重新加载变量</div><div class="line">source /etc/profile</div><div class="line"></div><div class="line">// 验证</div><div class="line">echo $PATH</div><div class="line">java -version</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="02-其他应用"><a href="#02-其他应用" class="headerlink" title="02.其他应用"></a>02.其他应用</h3><p>后续还需要使用SSH，因此还需要安装openssh<br><strong><em>相关脚本</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install openssh</div></pre></td></tr></table></figure></p>
+<h2 id="0x04-复制虚拟机"><a href="#0x04-复制虚拟机" class="headerlink" title="0x04 复制虚拟机"></a>0x04 复制虚拟机</h2><p>使用clone 功能，复制虚拟机，复制后的虚拟机需要修改的部分：  </p>
+<ol>
+<li>静态IP</li>
+<li>hostname</li>
+</ol>
+<h2 id="0x05-SSH无密码登陆"><a href="#0x05-SSH无密码登陆" class="headerlink" title="0x05 SSH无密码登陆"></a>0x05 SSH无密码登陆</h2><p>主要包括master无密码登陆slaves  </p>
+<ul>
+<li>将master的pubKey,加载到slave机器中。<br>同时slave可以登陆master  </li>
+<li><p>将slave的pubKey,加载到master<br><strong><em>相关脚本</em></strong><br>master主机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// 修改SSH配置文件，允许RSA校验，指定验证文件</div><div class="line">sudo vi /etc/ssh/sshd_config</div><div class="line">  RSAAuthentication yes</div><div class="line">  PubkeyAuthentication yes</div><div class="line">  AuthorizedKeysFile .ssh/authorized_keys</div><div class="line">  </div><div class="line">// 生成 public key，算法RSA，密码空</div><div class="line">ssh-keygen -t rsa -P &apos;&apos;</div><div class="line"></div><div class="line">// 将pubKey追加到验证文件</div><div class="line">cat ./.ssh/id_rsa.pub &gt;&gt; ./.ssh/authorized_keys</div><div class="line"></div><div class="line">// 修改权限</div><div class="line">chmod 600 ./.ssh/authorized_keys </div><div class="line"></div><div class="line">// 重启sshd</div><div class="line">service sshd restart</div><div class="line"></div><div class="line">// 验证，登陆本地SSH，无密码</div><div class="line">ssh hadoop@haoop.master</div><div class="line"></div><div class="line">// copy pubKey 到slaves，此处仍然需要密码登陆</div><div class="line">scp .ssh/id_rsa.pub hadoop@hadoop.slave01:/home/hadoop</div></pre></td></tr></table></figure>
+<p>slave主机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// 修改SSH配置文件，允许RSA校验，指定验证文件</div><div class="line">sudo vi /etc/ssh/sshd_config</div><div class="line">  RSAAuthentication yes</div><div class="line">  PubkeyAuthentication yes</div><div class="line">  AuthorizedKeysFile .ssh/authorized_keys</div><div class="line">  </div><div class="line">// 生成 public key，算法RSA，密码空</div><div class="line">ssh-keygen -t rsa -P &apos;&apos;</div><div class="line"></div><div class="line">// 将pubKey追加到验证文件</div><div class="line">cat ./.ssh/id_rsa.pub &gt;&gt; ./.ssh/authorized_keys</div><div class="line"></div><div class="line">// 追加master的public key文件到验证文件</div><div class="line">cat /home/hadoop/id_rsa.pub &gt;&gt; ./.ssh/authorized_keys</div><div class="line"></div><div class="line">// 修改权限</div><div class="line">chmod 600 ./.ssh/authorized_keys </div><div class="line"></div><div class="line">// 重启sshd</div><div class="line">service sshd restart</div><div class="line"></div><div class="line">// copy pubKey 到master并改名，此处完成后，登陆master主机，验证文件中追加slave的pubkey</div><div class="line">scp .ssh/id_rsa.pub hadoop@hadoop.master:/home/hadoop/id_rsa_slave01.pub</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="0x06-后续"><a href="#0x06-后续" class="headerlink" title="0x06 后续"></a>0x06 后续</h2><p>至此，基础环境安装完毕，可以下载hadoop的包进行解压配置了。<br>因为hadoop的配置文件根据环境的不同，配置方法比较复杂，就再单开一篇来记录吧。<br>此外后面才是Spark的相关安装配置。<br>路漫漫其修远，无奈本人相当懒.😂😁  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+            <a href="/tags/VirtualBox/" rel="tag"># VirtualBox</a>
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/SSH/" rel="tag"># SSH</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/The-Spring-REST-Stack-阅读/" rel="next" title="The-Spring-REST-Stack-阅读">
+                <i class="fa fa-chevron-left"></i> The-Spring-REST-Stack-阅读
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/14/Hadoop环境搭建-(一）/"
+     data-title="Hadoop环境搭建(一）"
+     data-content=""
+     data-url="https://moma-tech.github.io/2017/04/14/Hadoop环境搭建-(一）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/14/Hadoop环境搭建-(一）/"
+           data-title="Hadoop环境搭建(一）" data-url="https://moma-tech.github.io/2017/04/14/Hadoop环境搭建-(一）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/100229475/7C3E8B5359D15127F0D4A356301C5EA5/100"
+               alt="Ivan" />
+          <p class="site-author-name" itemprop="name">Ivan</p>
+          <p class="site-description motion-element" itemprop="description">生如夏花之绚烂，死如秋叶之静美</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/moma-tech" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-背景"><span class="nav-text">0x00 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-计划"><span class="nav-text">01. 计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-需要优先下载的软件包"><span class="nav-text">02. 需要优先下载的软件包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-虚拟机配置"><span class="nav-text">0x01.虚拟机配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-CentOS安装配置"><span class="nav-text">0x02.CentOS安装配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-网络配置"><span class="nav-text">01.网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-防火墙配置"><span class="nav-text">02.防火墙配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-Host配置"><span class="nav-text">03.Host配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-应用安装"><span class="nav-text">0x03 应用安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-JDK安装"><span class="nav-text">01.JDK安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-其他应用"><span class="nav-text">02.其他应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-复制虚拟机"><span class="nav-text">0x04 复制虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-SSH无密码登陆"><span class="nav-text">0x05 SSH无密码登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-后续"><span class="nav-text">0x06 后续</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ivan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"moma-tech"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
