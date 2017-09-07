@@ -94,7 +94,7 @@ integrated 整合
 social 社交
 connected 链接  
 
-手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如何沟通？不是使用过去的SOAP，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The-Spring-REST-Stack-阅读">
 <meta property="og:url" content="https://moma-tech.github.io/2017/04/10/The-Spring-REST-Stack-阅读/index.html">
@@ -109,8 +109,8 @@ integrated 整合
 social 社交
 connected 链接  
 
-手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
-<meta property="og:updated_time" content="2017-04-10T10:00:54.697Z">
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如何沟通？不是使用过去的SOAP，">
+<meta property="og:updated_time" content="2017-09-07T08:57:53.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The-Spring-REST-Stack-阅读">
 <meta name="twitter:description" content="Artical Link : The Spring REST Stack - Josh Long
@@ -123,7 +123,7 @@ integrated 整合
 social 社交
 connected 链接  
 
-手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，">
+手机和平板等便携设备，决定了现代应用可以随身携带。这些设备、系统或者应用之间如何沟通？不是使用过去的SOAP，">
 
 
 
@@ -349,8 +349,8 @@ connected 链接
                 <i class="fa fa-calendar-check-o"></i>
               </span>
               <span class="post-meta-item-text">更新于</span>
-              <time title="更新于" itemprop="dateModified" datetime="2017-04-10T18:00:54+08:00">
-                2017-04-10
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-07T16:57:53+08:00">
+                2017-09-07
               </time>
             
           </span>
@@ -416,8 +416,8 @@ connected 链接
 <li>social 社交</li>
 <li>connected 链接  </li>
 </ul>
-<p>手机和平板等便携设备，决定了现代应用可以随身携带。<br>这些设备、系统或者应用之间如果沟通？不是使用过去的SOAP，CORBA。更多的在使用REST。  </p>
-<h2 id="0x01-理查德森成熟模型"><a href="#0x01-理查德森成熟模型" class="headerlink" title="0x01 理查德森成熟模型"></a>0x01 理查德森成熟模型</h2><p>REST 是由 DR.Roy Fielding于2000年他的博士论文中提出的，完全基于HTTP协议。同时他更多的是一种通信风格，还不是一种标准。<br>REST 不是一种要么完全选择要么就放弃的技术，通常，用户更多选择去包含REST中的部分，去更有效率的配合他们的场景。<br>目前APIs经常会被称为“RESTful”，当然这要根据它们对REST原则的遵守情况。<br>我们可以使用理查德森成熟模型来对REST APIs进行分类辨别。<br>Matain Fowler针对这个模型有过一次详细的介绍，<a href="http://martinfowler.com/articles/richardsonMaturityModel.html" target="_blank" rel="external">Expaining the concepts</a>，下面是一个简短的版本：  </p>
+<p>手机和平板等便携设备，决定了现代应用可以随身携带。<br>这些设备、系统或者应用之间如何沟通？不是使用过去的SOAP，CORBA，更多的在使用REST。  </p>
+<h2 id="0x01-理查德森成熟模型"><a href="#0x01-理查德森成熟模型" class="headerlink" title="0x01 理查德森成熟模型"></a>0x01 理查德森成熟模型</h2><p>REST 是由 DR.Roy Fielding于2000年他的博士论文中提出的，完全基于HTTP协议。当时他更多的像是一种通信风格，而不是一种标准。<br>REST 不是一种要么完全选择要么就放弃的技术，通常，用户更多选择去包含REST中的部分，去更有效率的配合他们的场景。<br>目前APIs经常会被称为“RESTful”，当然这要根据它们对REST原则的遵守情况。<br>我们可以使用理查德森成熟模型来对REST APIs进行分类辨别。<br>Matain Fowler针对这个模型有过一次详细的介绍，<a href="http://martinfowler.com/articles/richardsonMaturityModel.html" target="_blank" rel="external">Expaining the concepts</a>，下面是一个简短的版本：  </p>
 <ul>
 <li><strong><em>Level 0 The Swamp of POX</em></strong><br>当使用HTTP纯粹作为通信手段的时候，API通常会处于这个此等级。例如，目前很多的SOAP服务都是基于HTTP，实际完全可以通过JMS或者SMTP实现。这一类的服务通常我们认为式最初级的RESTFUL。POX指的是老式的文本XML（Plain Old Xml），同时大部分处于此级别的技术，比如SOAP、RPC-XML，使用HTTP传输使用XML编码的数据信息，通常基于远程过程调用的语义模型，一般是SCHEMA。  </li>
 <li><strong><em>Level 1 Resources</em></strong><br>在这个级别，一个单体服务节点可以被扩展到多个，用于区分HTTP资源，通常一个资源对应系统中的一个对象，比如一条消费记录，或者一个用户记录。通常这些资源的相关联了其他资源，表现在他的拓扑URI表述中。比如，你可以暴露你系统中的每单个资源，例如 /user/1，/user/2.</li>
@@ -448,8 +448,10 @@ connected 链接
 <ul>
 <li>支持Classpath中声明的 JAXB 实现，用于在REST服务中进行object-to-xml的编译</li>
 <li>支持Classpath中声明的校验器，如Hibernate Validator，用于使用JSR 303标准注解校验请求中的信息内容</li>
-<li>支持</li>
+<li>支持通过ROMA LIB，渲染RSS/ATOM 消息</li>
+<li>支持将使用@Controller的bean暴露为一个HTTP服务节点</li>
 </ul>
+<p>未完待续～</p>
 
       
     </div>
